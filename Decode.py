@@ -16,6 +16,9 @@ RET = ']'
 # set up table? yes ---   
 # a list of list of string
 # a string is text ex- th -- string of characters 0 or more
+
+# ok so- t is th   h is TH   c is CH   s is SH   z is ZH   and   n is ng
+# pluss- O is oo   U is ou   A is ah   e is eh   E is ee
 table = [
     ['', '', '', 'H', 'R', '', ''],
     ['P', 'B', 'M', '', '', '', ''],
