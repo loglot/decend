@@ -1,0 +1,18 @@
+
+start: word
+
+word: (SYM | rec)+
+
+rec: CALL (SYM | rec)+ RET
+
+SYM: DOWN | RIGHT | LEFT | CONS | VOWEL
+
+DOWN: "-"
+RIGHT: "/"
+LEFT: "."
+
+CALL: "["
+RET: "]"
+
+CONS: "^"
+VOWEL: "~"
