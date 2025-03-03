@@ -3,7 +3,12 @@
 # pluss- O is oo   U is ou   A is ah   e is eh   E is ee
 # ee-oo # r # h-sh # l # m-p # n-t # ng-k # ch v TH z zh j
 canon = ["[////~]", "[///~]", "[//~]", "[/~]", "[~]", "[.~]", "[..~]", "[...~]", "[....~]", "[/^]", "[^]", "[--^]", "[---^]", "[----^]", "[-----^]", "[//----^]", "[.-^]", "[..-^]", "[...-^]", "[.----^]", "[..----^]", "[...----^]", "[.------^]", "[..------^]", "[...------^]", "[..-----^]", "[/--^]", "[/---^]", "[/----^]", "[/-----^]", "[///----^]"]
-vowcon= ["E", "I", "e", "a", "u", "A", "U", "o", "O", "R", "H", "F", "t", "S", "s", "L", "M", "B", "P", "N", "D", "T", "n", "G", "K", "c", "V", "h", "Z", "z", "J"]
+vowcon = ["E", "I", "e", "a", "u", "A", "U", "o", "O", "R", "H", "F", "t", "S", "s", "L", "M", "B", "P", "N", "D", "T", "n", "G", "K", "c", "V", "h", "Z", "z", "J"]
+
+vowcon_to_canon = {}
+for vow, can in zip(vowcon, canon):
+    vowcon_to_canon[vow] = can
+
 
 
 # menuing and mood setup
@@ -18,18 +23,22 @@ while x == 0 :
         if yesno == "Y":
             print("*u* yyyaaaayyy")
             print("-----------------------")
-            x = x+1
+            x = 1
         else:
             print("o-o oh... alright then")
             print("c.c guess i'll just encode")
-            mood = mood-1
-            x = x+2
+            mood = 0
+            x = 2
     else:
         print("T~T error Y or N please")
 
 #encoder later down the line-- simple list pick rn
 def encode(message):
-    return canon[int(message)-1]
+    print("output:")
+    for chara in (message):
+        print (vowcon_to_canon [chara], end="")
+    print()
+
 
 #keydump asthetics
 def dump(y):
@@ -38,11 +47,11 @@ def dump(y):
 # dump canon list key and goto encoder
 while x == 1 :
     # can do for y in range of (32) instead
-    y=0
+    y = 0
     while y < 31 :
         bleh = dump(y)
         print(bleh)
-        y = y+1
+        y = y + 1
     print("t = th  h = TH  c = CH  s = SH  z = ZH  n = NG")  
     print("O = oo  U = ou  A = ah  u = uh  e = eh  E = ee")
     print("-----------------------")
@@ -55,10 +64,10 @@ while x == 2 :
     while mood == 1 : 
         message = input("*w* --> ")
         result = encode(message)
-        print('output : ' +result)
+        
     while mood == 0 :
         message = input("-.- --> ")
         result = encode(message)
-        print('output : ' +result)
+
 
 
