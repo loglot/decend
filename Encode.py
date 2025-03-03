@@ -8,20 +8,27 @@ alpha = ["a", "b", "c"]
 
 # def tester:??
 
+x = 0
+
 
 def encode(message):
     return canon[int(message)-1]
 
+def dump(y):
+    return str(int(y+1)) + " = " + vowcon[int(y)] + " = " + canon[int(y)]
 
-location = 1
-# location +=
-# while location == 0 :
-    # movement = input("menu:")
-    # print(movement)
-    # location += [int[movement]]
+# dump canon list key
+while x == 0 :
+    # can do for y in range of (32) instead
+    y=0
+    while y < 31 :
+        bleh = dump(y)
+        print(bleh)
+        y = y+1
+    x = x+1
 
 
-while True :
+while x == 1 :
     message = input("*-*--> ")
     result = encode(message)
     print('output : ' +result)
