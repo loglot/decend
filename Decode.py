@@ -13,12 +13,12 @@ RET = ']'
 # 012345
 # 112345
 # 212345 -- row # and column #
-# set up table? yes ---   
-# a list of list of string
+# set up table  
+# a list of lists of string
 # a string is text ex- th -- string of characters 0 or more
 
-# ok so- t is th   h is TH   c is CH   s is SH   z is ZH   and   n is ng
-# pluss- O is oo   U is ou   A is ah   e is eh   E is ee
+# ok so- t is th   h is TH   c is CH   s is SH   z is ZH   n is NG
+# pluss- O is oo   U is ou   A is ah   e is eh   E is ee   u is uh
 table = [
     ['', '', '', 'H', 'R', '', ''],
     ['P', 'B', 'M', '', '', '', ''],
@@ -76,19 +76,21 @@ class Output:
 
 parser = Lark.open('grammar.lark')
 
+# parser? tree??
 def decode(msg):
     tree = parser.parse(msg)
     out = Output()
     out.add(tree)
     return out.res
 
+# why define main??
 def main():
     #  this is a while loop awawawa
     while True:
-        msg = input("^-^--> ")
+        msg = input("o.o--> ")
         res = decode(msg)
         print(res)
 
-
+# idk what this is
 if __name__ == '__main__':
     main()
