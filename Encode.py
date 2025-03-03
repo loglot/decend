@@ -13,7 +13,7 @@ def encode(message):
     return canon[int(message)-1]
 
 
-# location = 0
+location = 1
 # location +=
 # while location == 0 :
     # movement = input("menu:")
@@ -21,7 +21,7 @@ def encode(message):
     # location += [int[movement]]
 
 
-while location == 1 :
+while True :
     message = input("*-*--> ")
     result = encode(message)
     print('output : ' +result)
