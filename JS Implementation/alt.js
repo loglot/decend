@@ -74,10 +74,9 @@ function decode(input){
                 }
             break
             // no solid space standard, so i'm using this temporarily
-            // OR THERE IS JUST NO SPACES???
-            // case "_":
-            //     string = string+" "
-            // break
+            case "_":
+                string = string+" "
+            break
         }
         // if(i==0 && char[i] !="["){
         //     return("SYNTAX ERROR: does not start with '['")
@@ -105,7 +104,7 @@ function decode(input){
     }
     return(string)
 }
-var canon = ["", "[////~]", "[///~]", "[//~]", "[/~]", "[~]", "[.~]", "[..~]", "[...~]", "[....~]", "[/^]", "[^]", "[--^]", "[---^]", "[----^]", "[-----^]", "[//----^]", "[.-^]", "[..-^]", "[...-^]", "[.----^]", "[..----^]", "[...----^]", "[.------^]", "[..------^]", "[...------^]", "[..-----^]", "[/--^]", "[/---^]", "[/----^]", "[/-----^]", "[///----^]"]
+var canon = ["_", "[////~]", "[///~]", "[//~]", "[/~]", "[~]", "[.~]", "[..~]", "[...~]", "[....~]", "[/^]", "[^]", "[--^]", "[---^]", "[----^]", "[-----^]", "[//----^]", "[.-^]", "[..-^]", "[...-^]", "[.----^]", "[..----^]", "[...----^]", "[.------^]", "[..------^]", "[...------^]", "[..-----^]", "[/--^]", "[/---^]", "[/----^]", "[/-----^]", "[///----^]"]
 var vowcon = [" ", "E", "I", "e", "a", "u", "A", "U", "o", "O", "R", "H", "F", "t", "S", "s", "L", "M", "B", "P", "N", "D", "T", "n", "G", "K", "c", "V", "h", "Z", "z", "J"]
 
 function encodeCanon(input){
@@ -137,7 +136,7 @@ function encodeEfficient(input){
     var buffer = ""
     for(let i = 0; i < char.length; i++){
         if(char[i]==" "){
-            // output=output+"_"
+            output=output+"_"
         } else{
             for(let z = 0; z < lettertable.length; z++){
                 if(lettertable[z].includes(char[i])){
@@ -163,10 +162,51 @@ function encodeEfficient(input){
 
                 buffer = buffer+"~"
             }else{
-                if(ypos<y){
-                    buffer=buffer+"]["
-                    x=4
-                    y=1
+                var strsplit = output.split()
+                var shortestDist = [1000,-1,-1,-1]
+                var testX = x
+                var testY = y
+                var valid = 0
+                for(let h = strsplit.length-1; h >= 0; h--){
+                    switch (strsplit[h]){
+                        case "-":
+                            testY = testY==1?7:testY-1
+                        break
+                        case "/":
+                            testX = testX==0?8:testX-1
+                        break
+                        case ".":
+                            testX = testX==8?0:testX+1
+                        break
+                        case "/":
+                            testX = testX==0?8:testX-1
+                        break
+                        case "]":
+                            valid--
+                        break
+                        case "[":
+                            valid++
+                        break
+                    }
+                    var testdist=Math.abs(xpos-testX<0?xpos-testX+8:xpos-testX)+Math.abs(ypos-testY<0?ypos-testY+8:ypos-testY)
+                    var dist = 1111
+                    if(testdist<shortestDist[0]){
+                        shortestDist = [testdist,h,testX,testY]
+                    }
+                }
+                if(shortestDist[0]<900){
+                    strsplit = output.split()
+                    output = ""
+                    for(let d=0;d<strsplit.length;d++){
+                        if(d==shortestDist[1]){
+                            output = output+"["
+                        }
+                        output = output+strsplit[i]
+
+                    }
+                    output = output+"]"
+                    x=shortestDist[2]
+                    y=shortestDist[3]
                 }
                 while(xpos<x){
                     buffer = buffer+"."//+xpos+":"+x
