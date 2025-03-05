@@ -1,7 +1,7 @@
 button = document.getElementById("translatebtn")
 output = document.getElementById("output")
 input = document.getElementById("input")
-output.textContent = "output"
+input.value = "[----[[[//.]****^].**^]/./.]"
 
 var lettertable = [
     ['O', 'o', 'U', 'A', 'u', 'a', 'e', 'I', 'E'],
@@ -20,7 +20,6 @@ var y = 1
 button.addEventListener("click",function(){
     output.textContent = translate(input.value)
 })
-
 
 function translate(input){
     x = 4
@@ -55,16 +54,26 @@ function translate(input){
             break
             case "]":
                 nest--
-                
-                x = posStore[nest].x
-                y = posStore[nest].y
+                if(nest>=0){
+                    x = posStore[nest].x
+                    y = posStore[nest].y
+    
+                }
             break
         }
         if(i==0 && char[i] !="["){
             return("SYNTAX ERROR: does not start with '['")
         }
-        if(i==char.length-1 && char[i] !="]"){
-            return("SYNTAX ERROR: does not end with ']'")
+        if(i==char.length-1){
+            if(char[i] !="]"){
+                return("SYNTAX ERROR: does not end with ']'")
+
+            }
+            if(nest!=0){
+                
+                return("SYNTAX ERROR: bracket mismatch")
+
+            }
         }
 
     }

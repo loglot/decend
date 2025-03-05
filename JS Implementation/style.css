@@ -1,0 +1,22 @@
+body{
+    background-color: #0f0f0f;
+}
+p{
+    color:aliceblue
+}
+input{
+    background-color: rgba(0,0,0,0);
+    color:#fff;
+    outline-style: solid;
+    border-radius: 5px;
+    border-width: 2px;
+    border-color: #fff;
+}
+button{
+    background-color: rgba(0,0,0,0);
+    color:#fff;
+    outline-style: solid;
+    border-radius: 5px;
+    border-width: 2px;
+    border-color: #fff;
+}
