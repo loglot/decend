@@ -1,16 +1,66 @@
 body{
     background-color: #0f0f0f;
+    padding:0px;
+    margin:0px;
+}
+.all{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  background-color: #1f1f1f;
+  border-radius: 5vw;
+}
+.hori{
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 92vw;
+}
+h1{
+    color:aliceblue;
+    font-size: 4vw;
+    width:95vw;
+    text-align: center;
 }
 p{
-    color:aliceblue
+    color:aliceblue;
+    font-size: 2vw;
+    width:90vw;
+    text-align: right;
 }
-input{
+.textInput{
     background-color: rgba(0,0,0,0);
     color:#fff;
     outline-style: solid;
     border-radius: 5px;
     border-width: 2px;
     border-color: #fff;
+    font-size: 2vw;
+    width:70vw;
+    text-align: center;
+}
+.checkbox{
+
+  margin:1vw;
+    background-color: rgba(0,0,0,0);
+    color:#fff;
+    outline-style: solid;
+    border-radius: 5px;
+    border-width: 2px;
+    border-color: #fff;
+    font-size: 2vw;
+    text-align: right;
+    width:21vw;
+    margin-left: 68vw;
+}
+label{
+  color:#fff;
+  user-select: none;
+  
+
 }
 button{
     background-color: rgba(0,0,0,0);
@@ -19,4 +69,6 @@ button{
     border-radius: 5px;
     border-width: 2px;
     border-color: #fff;
+    font-size: 2vw;
+    width:10vw;
 }
