@@ -1,74 +1,89 @@
 body{
-    background-color: #0f0f0f;
-    padding:0px;
-    margin:0px;
+  background-color: #0f0f0f;
+  padding:0px;
+  margin:0px;
 }
 .all{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%,-50%);
-  transform: translate(-50%,-50%);
-  background-color: #1f1f1f;
-  border-radius: 5vw;
+position: absolute;
+top: 50%;
+left: 50%;
+-ms-transform: translate(-50%,-50%);
+transform: translate(-50%,-50%);
+background-color: #1f1f1f;
+border-radius: 5vw;
 }
 .hori{
 
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 92vw;
+display: block;
+margin-left: auto;
+margin-right: auto;
+width: 92vw;
+}
+.horiflex{
+
+display: flex;
+padding-top:1vw;
+padding-bottom:1vw;
+width: 92vw;
+button{
+  height:fit-content;
+  padding: 1vw;
+  margin:3vw;
+}
 }
 h1{
-    color:aliceblue;
-    font-size: 4vw;
-    width:95vw;
-    text-align: center;
+  color:aliceblue;
+  font-size: 4vw;
+  width:95vw;
+  text-align: center;
+  user-select: none;
 }
 p{
-    color:aliceblue;
-    font-size: 2vw;
-    width:90vw;
-    text-align: right;
+  color:aliceblue;
+  font-size: 2vw;
+  width:90vw;
+  text-align: right;
 }
 .textInput{
-    background-color: rgba(0,0,0,0);
-    color:#fff;
-    outline-style: solid;
-    border-radius: 5px;
-    border-width: 2px;
-    border-color: #fff;
-    font-size: 2vw;
-    width:70vw;
-    text-align: center;
+  background-color: rgba(0,0,0,0);
+  color:#fff;
+  outline-style: solid;
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: #fff;
+  font-size: 2vw;
+  width:70vw;
+  text-align: center;
 }
 .checkbox{
 
-  margin:1vw;
-    background-color: rgba(0,0,0,0);
-    color:#fff;
-    outline-style: solid;
-    border-radius: 5px;
-    border-width: 2px;
-    border-color: #fff;
-    font-size: 2vw;
-    text-align: right;
-    width:21vw;
-    margin-left: 68vw;
+margin:1vw;
+  background-color: rgba(0,0,0,0);
+  color:#fff;
+  outline-style: solid;
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: #fff;
+  font-size: 2vw;
+  text-align: center;
+  width:31vw;
+  margin-left: 40vw;
+  padding: 1vw;
 }
 label{
-  color:#fff;
-  user-select: none;
-  
+color:#fff;
+user-select: none;
+
 
 }
 button{
-    background-color: rgba(0,0,0,0);
-    color:#fff;
-    outline-style: solid;
-    border-radius: 5px;
-    border-width: 2px;
-    border-color: #fff;
-    font-size: 2vw;
-    width:10vw;
+user-select: none;
+  background-color: rgba(0,0,0,0);
+  color:#fff;
+  outline-style: solid;
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: #fff;
+  font-size: 2vw;
+  width:10vw;
 }

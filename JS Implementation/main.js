@@ -1,9 +1,14 @@
+
 button = document.getElementById("translatebtn")
 encodebutton = document.getElementById("encodebtn")
+copybutton = document.getElementById("copybtn")
 output = document.getElementById("output")
 input = document.getElementById("input")
 canonicalCheck = document.getElementById("canon")
-input.value = "[----[[[[..^]////~]^//~].^.^_.^]][/^..~----^[/^//^.~]..^....~]"
+qolCheck = document.getElementById("qol")
+MCF = document.getElementById("MCF")
+input.value = "[----[[[..^]////~]^//~].^.^_.^][/[^..~----^[/^//^.~]..^]/~]"
+// input.value = "SNLNM"
 var lettertable = [
     ['O', 'o', 'U', 'A', 'u', 'a', 'e', 'I', 'E'],
 
@@ -15,19 +20,13 @@ var lettertable = [
     ['' , '' , 'c', '' , 's', 'z', '' , 'J', '' ],
     ['' , 'K', 'G', 'n', '' , '' , '' , '' , '' ],
 ]
-//[----[[[../]////^]///^]././]
+//[-[---^[.^///^].^].^]
 var x = 4
 var y = 1
 
 
-button.addEventListener("click",function(){
-    output.textContent = translate(input.value)
-})
-encodebutton.addEventListener("click",function(){
-    output.textContent = encode(input.value)
-})
 function translate(input){
-    var encoded = encode(input)
+    var encoded = encodeCanon(input,true)
     if(encoded != "[null]"){
         input = encoded
     }
@@ -53,13 +52,13 @@ function decode(input){
             //     y = y==1?7:y-1
             // break
             case "-":
-                y = y==7?1:y+1
+                y++
             break
             case ".":
-                x = x==0?8:x-1
+                x--
             break
             case "/":
-                x =x==8?0:x+1
+                x++
             break
             case "[":
                 posStore[nest] = {x:x,y:y}
@@ -74,10 +73,14 @@ function decode(input){
                 }
             break
             // no solid space standard, so i'm using this temporarily
-            // OR THERE IS JUST NO SPACES???
-            // case "_":
-            //     string = string+" "
-            // break
+            // turns out there are no spaces
+            // locking behind qol
+            case "_":
+                if(qolCheck.checked){
+
+                    string = string+" "
+                }
+            break
         }
         // if(i==0 && char[i] !="["){
         //     return("SYNTAX ERROR: does not start with '['")
@@ -89,7 +92,7 @@ function decode(input){
             // }
             if(nest!=0){
                 
-                return("SYNTAX ERROR: bracket mismatch")
+                return("ERROR: SYNTAX: bracket mismatch")
 
             }
             if(x!=4||y!=1){
@@ -108,7 +111,13 @@ function decode(input){
 var canon = ["", "[////~]", "[///~]", "[//~]", "[/~]", "[~]", "[.~]", "[..~]", "[...~]", "[....~]", "[/^]", "[^]", "[--^]", "[---^]", "[----^]", "[-----^]", "[//----^]", "[.-^]", "[..-^]", "[...-^]", "[.----^]", "[..----^]", "[...----^]", "[.------^]", "[..------^]", "[...------^]", "[..-----^]", "[/--^]", "[/---^]", "[/----^]", "[/-----^]", "[///----^]"]
 var vowcon = [" ", "E", "I", "e", "a", "u", "A", "U", "o", "O", "R", "H", "F", "t", "S", "s", "L", "M", "B", "P", "N", "D", "T", "n", "G", "K", "c", "V", "h", "Z", "z", "J"]
 
-function encodeCanon(input){
+function encodeCanon(input,internal=false){
+
+    if(qolCheck.checked){
+        canon[0]="_"
+    } else {
+        canon[0]=""
+    }
 
     var char = input.split("")
     var output = ""
@@ -122,7 +131,7 @@ function encodeCanon(input){
     }
     if(output == ""){
         output = "[null]"
-        if (window.confirm('WARN: No Output Detected, Need A Key?')) 
+        if(!internal) if (window.confirm('WARN: No Output Detected, Need A Key?')) 
             {
             window.location.href='./key.md';
             };
@@ -131,14 +140,19 @@ function encodeCanon(input){
 }
 
 function encodeEfficient(input){
+    var closesta = []
 
     var char = input.split("")
     var output = "["
     var buffer = ""
     for(let i = 0; i < char.length; i++){
         if(char[i]==" "){
-            // output=output+"_"
+            if(qolCheck.checked){
+            output=output+"_"
+            }
         } else{
+            xpos=1000
+            ypos=1000
             for(let z = 0; z < lettertable.length; z++){
                 if(lettertable[z].includes(char[i])){
                     for(let j = 0; j < lettertable[z].length; j++){
@@ -151,7 +165,11 @@ function encodeEfficient(input){
                 }
             }
             buffer=""
-            if(ypos==0){
+            if(xpos>100||ypos>100){}
+            else if(ypos==0){
+            // if(ypos==0){
+                closesta=getClosestPoint(i,output,"x")
+                output = parseStringToClosest(i,output,closesta)
                 while(xpos<x){
                     buffer = buffer+"."//+xpos+":"+x
                     x--
@@ -163,36 +181,46 @@ function encodeEfficient(input){
 
                 buffer = buffer+"~"
             }else{
-                if(ypos<y){
-                    buffer=buffer+"]["
-                    x=4
-                    y=1
-                }
-                while(xpos<x){
-                    buffer = buffer+"."//+xpos+":"+x
-                    x--
+                closesta=getClosestPoint(i,output)
+                output = parseStringToClosest(i,output,closesta)
+                // if(ypos<y){
+                //     buffer=buffer+"]["
+                //     x=4
+                //     y=1
+                // }
+                while(ypos>y){
+                    buffer = buffer+"-"
+                    y++
                 }
                 while(xpos>x){
                     buffer = buffer+"/"
                     x++
                 }
-                while(ypos>y){
-                    buffer = buffer+"-"
-                    y++
+                while(xpos<x){
+                    buffer = buffer+"."//+xpos+":"+x
+                    x--
                 }
                 buffer = buffer+"^"//+xpos+":"+x
     
             }
-            output=output+buffer
+            output=output+buffer//
         }
     }
-    
-    return(output+"]")
+    output = output+"]"
+    if(output == "[]"){
+        output = "[null]"
+        if (window.confirm('WARN: No Output Detected, Need A Key?')) 
+            {
+            window.location.href='./key.md';
+            };
+    }
+    return(output)//+" +["+closesta+"]")
 }
 
 function encode(input){
     var translated = decode(input)
-    if(translated != "[null]"){
+    var translateARR=translated.split("")
+    if(translated != "[null]"&&translateARR[5]!=":"){
         input = translated
     }
     if(canonicalCheck.checked){
@@ -200,4 +228,107 @@ function encode(input){
     }else{
         return(encodeEfficient(input))
     }
+}
+
+function getClosestPoint(i,output,mode="both"){
+    var splitout= output.split("")
+    var testX=x
+    var testY=y
+    var valid=0
+    var closest=[]
+    closest[i]=[1000,0,0,0]
+    if(Math.abs(x-xpos)>1||y>ypos) {for(let l = splitout.length; l>0;l--){
+        switch(splitout[l]){
+            case "/":
+                if(valid>=0) testX--
+            break
+            case ".":
+                if(valid>=0) testX++
+                
+            break
+            case "-":
+                if(valid>=0) testY--
+            break
+            case "[":
+                valid++
+            break
+            case "]":
+                valid--
+            break
+        }
+        if(mode == "both") if(valid>=0) if(testY<=ypos) if(Math.abs(testX-xpos)+(ypos-testY<0?10000:ypos-testY)<closest[i][0]){
+        //if(Math.abs(testX-xpos)+Math.abs(ypos-testY)<closest[i][0]){
+            // closest[i] = [Math.abs(testX-xpos)+(ypos-testY<0?10000:ypos-testY),l,testX,testY," "]
+            
+            closest[i] = [Math.abs(testX-xpos)+Math.abs(ypos-testY),l,testX,testY]
+            
+        }
+        if(mode == "x") if(valid>=0) if(Math.abs(testX-xpos)<closest[i][0]){
+            //if(Math.abs(testX-xpos)+Math.abs(ypos-testY)<closest[i][0]){
+                // closest[i] = [Math.abs(testX-xpos)+(ypos-testY<0?10000:ypos-testY),l,testX,testY," "]
+                
+                closest[i] = [Math.abs(testX-xpos),l,testX,testY]
+                
+            }
+    }} else closest[i]=[Math.abs(x-xpos),splitout.length,testX,testY]
+    return(closest)
+}
+
+function parseStringToClosest(i,output,closesta){
+
+    var test
+    if(closesta[i][0]<=200){
+        test = output.split("")
+        var bak =test[closesta[i][1]] 
+        test[closesta[i][1]]=["[",bak].join("")
+        test.push("]")
+        var testII = test.join("")
+        test = testII.split("[]")
+        output=test.join("")
+        x=closesta[i][2]
+        y=closesta[i][3]
+        return(output)
+    }
+
+}
+
+
+// frontend stuff --------------------------------------------------------------------------------
+
+button.addEventListener("click",function(){
+    initOutput(translate(input.value)) 
+})
+encodebutton.addEventListener("click",function(){
+    initOutput(encode(input.value)) 
+})
+copybutton.addEventListener("click",function(){
+    navigator.clipboard.writeText(output.textContent);
+})
+var textOut=""
+var textTarget="aaaaaa"
+var textArr = []
+var V = 0
+var D = 0
+function mcfchecker(){
+    if(MCF){
+        
+    }
+}
+function initOutput(input){
+    textTarget=input
+    textOut=""
+    textArr=textTarget.split("")
+    V=textArr.length
+    D = 0
+    output.textContent = "loading..."
+    setTimeout(outputText,200+(Math.random()*600))
+}
+function outputText(){
+    textOut=textOut+textArr[D]
+    output.textContent = textOut
+    D++
+    if(D<V){
+        setTimeout(outputText,(40-Math.log((D+1)/5)*10))
+    }
+
 }

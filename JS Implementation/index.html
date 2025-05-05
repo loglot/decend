@@ -1,22 +1,41 @@
+<head></head>
+<body></body>
 <div class = all>
         
-    <h1 id="output">DESeNDTRANSLaTe</h1>
-    <div class="hori">
+    <h1 id="output">DESeND TRANSLaTe</h1>
+    <div class="hori">  
         <button id="translatebtn" title="Decodes both canonical and non canonical texts">
             Decode!
-        </button>    
+        </button>  
         <input id="input" class="textInput">
         <button id="encodebtn" title="Encodes to the canonical standard">
             Encode!
         </button>    
     </div>
-    <div class="checkbox">
+    
+    <div class="horiflex">  
+        <button id="copybtn" title="Decodes both canonical and non canonical texts">
+            Copy!
+        </button>  
+        <div>
+            <div class="checkbox">
 
-        <label for="canon">Canonical Encoding?<label>
-        <input id="canon"type="checkbox"checked=true title="only canonical encoding is supported for now" >
+                <label for="canon">Canonical Encoding?<label>
+                <input id="canon"type="checkbox"checked title="only canonical encoding is supported for now" >
+            </div>
+            <div class="checkbox">
+                <label for="qol">Quality Of Life?<label>
+                <input id="qol"type="checkbox" title="qol options that aren't nativly supported by DESeND" >
+            </div>
+            <div class="checkbox">
+                <label for="MCF">Multi Character Phonetics?<label>
+                <input id="MCF"type="checkbox" title="shows phonetics in a way that isn't put down to a single character" >
+            </div>
+        
+        </div>
     </div>
 
-    <script src="./main.js"></script>
     <title>[----[[[..^]////~]^//~].^.^]</title>
     <link rel="stylesheet" href="./style.css">
+    <script src="./main.js"></script>
 </div>
